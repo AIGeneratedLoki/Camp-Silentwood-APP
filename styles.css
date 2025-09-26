@@ -1,0 +1,489 @@
+/* --- Global Styles & Font Import --- */
+        :root {
+            --background-dark: #0a0c10;
+            --paper-bg-transparent: rgba(10, 12, 16, 0.4); /* Dark, 40% opacity */
+            --text-light: #e0e0e0;
+            --accent-red: #c70000;
+            --accent-red-dark: #8f0000;
+            --highlight-red-bg: rgba(255, 20, 20, 0.35); /* Brighter BG for highlights */
+            --highlight-red-glow: #ff1111; /* Bright glow color */
+            --border-color-light: rgba(224, 224, 224, 0.5);
+            --border-color-dark: rgba(224, 224, 224, 0.2);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'VT323', monospace; /* 90s pixelated horror font */
+            background-color: var(--background-dark);
+            color: var(--text-light); /* Set default text color to light for dark theme */
+            overflow-x: hidden; /* Prevent horizontal scrollbars */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9); /* Added for better readability */
+        }
+
+        /* --- Main App Container & Background --- */
+        .app-container {
+            width: 100%;
+            min-height: 100vh; /* Allow container to grow beyond screen height */
+            background-image: url('Assets/mainbackground.png');
+            background-attachment: fixed; /* Keeps the background fixed during scroll */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* This pseudo-element creates the VHS scanline overlay */
+        .vhs-overlay {
+            position: fixed; /* Fixed position to cover the whole screen */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.3) 0px,
+                rgba(0, 0, 0, 0.3) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 210; /* Ensure it's on top of everything */
+            animation: vhs-glitch 0.2s infinite steps(4);
+        }
+
+        @keyframes vhs-glitch {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(2px, 2px); }
+            100% { transform: translate(-2px, -2px); }
+        }
+
+
+        /* --- Header & Navigation Icons --- */
+        .app-header {
+            padding-top: 20px;
+            height: 150px; /* Provides space for the background image to show above the panel */
+            flex-shrink: 0;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .main-nav a:hover {
+            transform: scale(1.1); /* Fun hover effect */
+        }
+
+        .main-nav a.active .icon-circle img {
+             filter: drop-shadow(0 0 10px var(--highlight-red-glow)) drop-shadow(0 0 18px var(--highlight-red-glow));
+        }
+        
+        .icon-circle {
+            background-color: transparent;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .icon-circle img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        /* --- Main Content Panel --- */
+        .content-panel {
+            background-color: var(--paper-bg-transparent);
+            padding: 20px;
+            flex-grow: 1;
+            position: relative;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            display: none;
+            min-height: 500px;
+        }
+        
+        .content-panel.active {
+            display: block;
+        }
+        
+        /* --- General Button Style --- */
+        .btn {
+            background-color: var(--accent-red-dark);
+            color: var(--text-light);
+            border: 1px solid var(--border-color-light);
+            padding: 8px 12px;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: var(--accent-red);
+        }
+        
+        /* --- General Input Styles --- */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+        textarea, select {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+        }
+
+        /* --- Page Specific Styles (Tabs) --- */
+        .page-tabs {
+            display: flex;
+            justify-content: center; /* This centers the tab buttons */
+            border-bottom: 2px solid var(--border-color-dark);
+            margin-bottom: 20px;
+        }
+
+        .page-tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            outline: none;
+        }
+
+        .page-tab-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .page-tab-btn.active {
+            border-bottom-color: var(--highlight-red-glow);
+            color: white;
+            background-color: var(--highlight-red-bg);
+            text-shadow: 0 0 10px var(--highlight-red-glow);
+        }
+
+        .page-tab-content-item {
+            display: none;
+        }
+
+        .page-tab-content-item.active {
+            display: block;
+        }
+
+        /* --- Story Page --- */
+        .story-container { display: flex; gap: 20px; min-height: 400px; }
+        .story-sidebar { width: 35%; border-right: 2px solid var(--border-color-dark); padding-right: 20px; }
+        .story-main { width: 65%; }
+        .story-controls { display: flex; gap: 5px; margin-bottom: 10px; }
+        .story-controls button { flex: 1; }
+        .story-nav-arrow { flex-shrink: 0; font-size: 24px; padding: 5px 12px; line-height: 1; }
+        .story-hierarchy { list-style: none; padding: 0; margin: 0; }
+        .act-item { margin-bottom: 15px; }
+        .act-title { font-size: 24px; cursor: pointer; padding: 5px; border: 2px solid transparent; }
+        .act-title.selected { border-color: var(--accent-red); background-color: var(--highlight-red-bg); box-shadow: 0 0 8px var(--highlight-red-glow); }
+        .plot-points { list-style: none; padding-left: 20px; margin-top: 5px; }
+        .plot-point, .side-quest { cursor: pointer; padding: 5px; margin-bottom: 5px; display: flex; align-items: center; }
+        .plot-point::before { content: '●'; margin-right: 10px; color: var(--border-color-light); }
+        .side-quest::before { content: '?'; margin-right: 10px; color: var(--accent-red); font-weight: bold; border: 1px solid var(--accent-red); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; line-height: 1; }
+        .plot-point.selected, .side-quest.selected { background-color: var(--highlight-red-bg); }
+        .story-main-card { height: 100%; display: flex; flex-direction: column; flex-grow: 1; }
+        .story-main-title { padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .story-main-title-input { background: transparent; border: none; color: var(--text-light); font-family: 'VT323', monospace; font-size: 24px; width: 100%; outline: none; flex-grow: 1; }
+        .side-quest-icon { font-size: 24px; color: var(--accent-red); font-weight: bold; display: none; }
+        .story-main-content { padding: 10px 0; flex-grow: 1; }
+        .story-main-content .editable-textarea { width: 100%; height: 100%; min-height: 250px; background: transparent; border: none; color: var(--text-light); font-family: 'VT323', monospace; font-size: 20px; resize: none; outline: none; white-space: pre-wrap; }
+        .editable-textarea:empty:before { content: attr(data-placeholder); color: grey; }
+        .editable-textarea p { margin: 0; padding-left: 2em; text-indent: -2em; }
+        .bullet-toggle { background-color: var(--accent-red-dark); color: var(--text-light); border: 1px solid var(--border-color-light); padding: 8px 12px; font-family: 'VT323', monospace; font-size: 18px; cursor: pointer; flex-shrink: 0; }
+        .bullet-toggle.active { background-color: var(--accent-red); color: white; box-shadow: 0 0 12px var(--highlight-red-glow); }
+        .story-main-nav { padding-top: 10px; display: flex; justify-content: center; gap: 10px; }
+        .story-delete-btn {
+            color: var(--accent-red);
+            cursor: pointer;
+            padding: 0 5px;
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            line-height: 1;
+            text-shadow: 0 0 3px #000, 0 0 5px var(--highlight-red-glow);
+            transition: all 0.2s ease;
+        }
+        .story-delete-btn:hover {
+            transform: scale(1.2);
+            color: var(--highlight-red-glow);
+        }
+
+        /* --- Session Notes Styles --- */
+        .session-notes-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 20px; height: 100%; min-height: 500px; }
+        .session-note-box { display: flex; flex-direction: column; background-color: rgba(0, 0, 0, 0.2); padding: 15px; border: 1px solid var(--border-color-dark); }
+        .session-note-box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .session-note-box h3 { margin: 0; font-size: 20px; color: white; text-transform: uppercase; text-shadow: 0 0 6px var(--accent-red), 0 0 10px var(--accent-red-dark); }
+        .session-note-box .editable-textarea { width: 100%; flex-grow: 1; background: transparent; border: none; color: var(--text-light); font-family: 'VT323', monospace; font-size: 18px; resize: none; outline: none; white-space: pre-wrap; }
+        .archive-notes-container { display: flex; justify-content: center; margin-top: 20px; }
+        
+        /* --- Encounters Page --- */
+        .no-battles-notice { text-align: center; font-size: 24px; color: var(--border-color-light); padding: 50px 20px; font-style: italic; }
+        .battle-group { border: 2px solid var(--border-color-dark); padding: 15px; margin-bottom: 20px; }
+        .battle-group.completed { border-color: rgba(100,100,100,0.5); }
+        .battle-group.completed .combatant-row-input { background-color: transparent; border-color: transparent; }
+        .combat-controls { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .combatants-list { list-style: none; padding: 0; margin: 0; }
+        .combatant-item { border-bottom: 1px solid var(--border-color-dark); padding: 4px 0 8px 0; margin-bottom: 8px; border-radius: 5px; transition: all 0.3s ease; }
+        .combatant-item.turn-highlight { background-color: var(--highlight-red-bg); box-shadow: 0 0 12px var(--highlight-red-glow); padding-left: 10px; }
+        .combatant-row { display: flex; align-items: center; gap: 10px; font-size: 20px; }
+        .combatant-row-input { background: rgba(0,0,0,0.3); border: 1px solid var(--border-color-light); color: var(--text-light); font-family: 'VT323', monospace; font-size: 20px; text-align: center; outline: none; padding: 5px; }
+        .combatant-row-input:focus { border-color: var(--accent-red); }
+        .combatant-row .init { width: 40px; }
+        .combatant-row .name { flex-grow: 1; text-align: left; }
+        .combatant-row .ac { width: 40px; }
+        .combatant-row .hp { width: 50px; }
+        .combatant-row .max-hp { width: 50px; }
+        .combatant-row .status-btn { font-size: 16px; padding: 5px 10px; }
+        .combatant-row > span { margin: 0 5px; }
+        .status-effects-display { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px 0 0 50px; }
+        .status-tag { background-color: var(--accent-red-dark); padding: 2px 8px; font-size: 14px; border-radius: 4px; border: 1px solid var(--accent-red); }
+        .combat-actions { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
+
+        /* --- Creatures & Players Tabs --- */
+        .library-layout { display: flex; flex-direction: column; gap: 20px; }
+        .library-top-panel { display: flex; gap: 20px; align-items: flex-start; }
+        .library-controls { display: flex; flex-direction: column; gap: 10px; }
+        #creature-search-input { width: 180px; background-color: rgba(0,0,0,0.3); border: 1px solid var(--border-color-light); padding: 8px; font-family: 'VT323', monospace; font-size: 18px; color: var(--text-light); }
+        .creatures-list { flex-grow: 1; border: 1px solid var(--border-color-dark); padding: 10px; max-height: 140px; overflow-y: auto; }
+        .creatures-list-item { cursor: pointer; padding: 2px 5px; }
+        .creatures-list-item:hover { background-color: var(--highlight-red-bg); }
+        .library-saved-title { font-size: 24px; text-align: center; border-bottom: 1px solid var(--border-color-dark); padding-bottom: 5px; margin-bottom: 15px; }
+        .character-card { border: 2px solid var(--border-color-light); margin-bottom: 10px; background-color: rgba(0,0,0,0.3); }
+        .character-card-minimized { display: flex; align-items: center; padding: 10px; gap: 15px; cursor: pointer; }
+        .character-lvl { font-size: 18px; text-align: center; }
+        .character-name-race { flex-grow: 1; }
+        .character-name-race h3 { margin: 0; font-size: 22px; }
+        .character-name-race p { margin: 0; font-size: 16px; color: #ccc; }
+        .character-ac, .character-hp { text-align: center; }
+        .character-input { background: none; border: none; color: var(--text-light); font-family: 'VT323',monospace; text-align: center; font-size: 16px; border-bottom: 1px dotted var(--border-color-dark); }
+        .character-input:disabled { border-color: transparent; color: var(--text-light); }
+        .character-input:disabled:not(textarea) { -webkit-appearance: none; appearance: none; } /* Hide dropdown arrow when disabled */
+        select.character-input { background-color: rgba(0,0,0,0.3); padding: 2px;}
+
+        /* --- Modals --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 200; display: flex; justify-content: center; align-items: center; }
+        .modal-content { background-color: var(--background-dark); padding: 25px; border: 2px solid var(--accent-red); box-shadow: 0 0 20px var(--accent-red); width: 90%; max-width: 500px; transition: box-shadow 0.3s, border-color 0.3s; }
+        .modal-content h2 { margin-top: 0; text-align: center; color: var(--accent-red); }
+        #status-options-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; font-size: 18px; }
+        .status-option label { display: flex; align-items: center; cursor: pointer; }
+        .status-option input { margin-right: 8px; }
+        .modal-actions { text-align: center; display: flex; gap: 15px; justify-content: center; }
+        .feedback-content { background-color: var(--background-dark); padding: 20px 40px; border: 2px solid var(--accent-red); box-shadow: 0 0 20px var(--accent-red); font-size: 24px; color: var(--text-light); text-align: center; }
+
+        /* --- Player & Creature Sheet Modals --- */
+        #player-sheet-modal .modal-content,
+        #creature-sheet-modal .modal-content { max-width: 900px; max-height: 90vh; overflow-y: auto; }
+        #player-sheet-modal .modal-content.edit-mode-active {
+            border-color: var(--highlight-red-glow);
+            box-shadow: 0 0 25px var(--highlight-red-glow);
+        }
+        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .sheet-header h2 { margin: 0; flex-grow: 1; }
+        .edit-toggle-label { display: flex; align-items: center; cursor: pointer; }
+        .edit-toggle-label input { display: none; }
+        .edit-toggle-switch { position: relative; width: 50px; height: 26px; background: #555; border-radius: 13px; transition: 0.2s; }
+        .edit-toggle-switch::before { content: ""; position: absolute; width: 22px; height: 22px; border-radius: 50%; background: white; top: 2px; left: 2px; transition: 0.2s; }
+        .edit-toggle-label input:checked + .edit-toggle-switch { background: var(--accent-red); }
+        .edit-toggle-label input:checked + .edit-toggle-switch::before { transform: translateX(24px); }
+        
+        .player-sheet-body { 
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sheet-box { border: 1px solid var(--border-color-dark); padding: 10px; }
+        .sheet-box h3 { margin-top: 0; text-align: center; font-size: 18px; text-transform: uppercase; }
+        .sheet-header-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .sheet-header-grid > div { display: flex; flex-direction: column; }
+        .sheet-header-grid label { font-size: 14px; color: #aaa; }
+        .sheet-header-grid .character-input { width: 100%; font-size: 18px; }
+        
+        /* New and updated styles for the player sheet body */
+        .player-sheet-body > .sheet-box > h3 { font-size: 20px; }
+        .player-sheet-body .sheet-main-stats { font-size: 20px; }
+        .player-sheet-body .ability-scores-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .player-sheet-body .ability-scores-grid .score-group {
+            flex-direction: column;
+            align-items: center;
+        }
+        .player-sheet-body .ability-scores-grid .score-group .character-input {
+            width: 60px;
+            font-size: 24px;
+        }
+        .player-sheet-body .ability-scores-grid .ability-modifier {
+            font-size: 24px;
+            margin-top: 5px;
+        }
+
+        .combat-info-flex-container {
+            display: flex;
+            gap: 20px;
+        }
+        .combat-info-stats-col {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .scratchpad-col {
+            flex-grow: 1;
+        }
+        .scratchpad-col textarea {
+            width: 100%;
+            height: 100%;
+            min-height: 100px;
+            background-color: rgba(0,0,0,0.2);
+            font-family: 'VT323', monospace;
+            color: var(--text-light);
+            border: 1px solid var(--border-color-dark);
+            resize: vertical; /* Allow resizing only vertically */
+            padding: 5px;
+        }
+        
+        .sheet-main-stats input { width: 50px; font-size: 20px; }
+        .attacks-table textarea { width: 100%; min-height: 80px; }
+        .sheet-box textarea { width: 100%; min-height: 100px; background-color: rgba(0,0,0,0.2); }
+        .api-data-list { list-style: none; padding-left: 10px; }
+        .api-data-list li { margin-bottom: 5px; }
+        .proficiency-choice-group { margin-top: 10px; }
+        .attacks-table { width: 100%; border-collapse: collapse; }
+        .attacks-table th, .attacks-table td { border: 1px solid var(--border-color-dark); padding: 5px; text-align: center; }
+        .attacks-table input { width: 100%; }
+
+        .creature-sheet-body {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+        }
+        .api-data-list li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color-dark);
+        }
+        .api-data-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Notes Page --- */
+        .notes-layout { display: flex; gap: 20px; min-height: 400px; }
+        .notes-sidebar { width: 35%; border-right: 2px solid var(--border-color-dark); padding-right: 20px; }
+        .notes-main { width: 65%; display: flex; flex-direction: column; }
+        .notes-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        #notes-list { list-style: none; padding: 0; margin: 0; }
+        .note-item { padding: 5px; cursor: pointer; }
+        .note-item.selected { background-color: var(--highlight-red-bg); }
+        .note-header { display: flex; justify-content: space-between; }
+        .note-delete-btn { color: var(--accent-red); cursor: pointer; padding: 0 5px; }
+        .sub-notes-list { list-style: none; padding-left: 20px; }
+        #note-editor { width: 100%; flex-grow: 1; background: transparent; border: 1px solid var(--border-color-dark); color: var(--text-light); font-family: 'VT323', monospace; font-size: 20px; resize: none; outline: none; padding: 10px; }
+        #note-editor:not(:disabled) {
+            border-color: var(--highlight-red-glow);
+            box-shadow: 0 0 15px var(--highlight-red-glow);
+        }
+
+        #note-editor:disabled { border-color: transparent; }
+/* --- Chat Page --- */
+.chat-container {
+    display: flex;
+    gap: 20px;
+    min-height: 400px;
+}
+
+.chat-main {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-history-sidebar {
+    width: 30%;
+    border-left: 2px solid var(--border-color-dark);
+    padding-left: 20px;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    border: 1px solid var(--border-color-dark);
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    min-height: 300px;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+}
+
+#chat-input {
+    width: 100%;
+    height: 80px;
+    background-color: rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color-light);
+    padding: 8px;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    color: var(--text-light);
+    resize: none;
+}
+
+.chat-history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chat-history-item {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.chat-history-item.active {
+    background-color: var(--highlight-red-bg);
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.chat-message-user {
+    text-align: right;
+}
+
+.chat-message-assistant {
+    text-align: left;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 5px;
+}

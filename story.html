@@ -1,0 +1,30 @@
+<section id="page-story" class="content-panel active">
+                <div class="page-tabs">
+                    <button class="page-tab-btn active" data-tab="story-tab-content">Story</button>
+                    <button class="page-tab-btn" data-tab="session-notes-tab-content">Session Notes</button>
+                </div>
+                <div id="story-tab-content" class="page-tab-content-item active">
+                    <div class="story-container">
+                        <div class="story-sidebar">
+                            <div class="story-controls"> <button id="new-act-btn" class="btn">New Act</button> <button id="new-plot-point-btn" class="btn">New Plot Point</button> <button id="new-side-quest-btn" class="btn">New Side Quest</button> </div>
+                            <ul id="story-hierarchy-list" class="story-hierarchy"></ul>
+                        </div>
+                        <div class="story-main">
+                            <div class="story-main-card">
+                                <div class="story-main-title"> <input type="text" id="story-title-input" class="story-main-title-input" value="Select a note..."> <span id="side-quest-indicator" class="side-quest-icon">?</span> <span id="story-main-delete-btn" class="story-delete-btn" style="display: none;">&times;</span> <button class="bullet-toggle btn">●</button> </div>
+                                <div class="story-main-content"> <div id="story-content-textarea" class="editable-textarea" contenteditable="true"></div> </div>
+                                <div class="story-main-nav"> <button id="prev-note-btn" class="story-nav-arrow btn">◀</button> <button id="next-note-btn" class="story-nav-arrow btn">▶</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="session-notes-tab-content" class="page-tab-content-item">
+                    <div class="session-notes-grid">
+                        <div class="session-note-box"> <div class="session-note-box-header"> <h3>Events and Story</h3> <button class="bullet-toggle btn">●</button> </div> <div id="session-events-story" class="editable-textarea" contenteditable="true" data-placeholder="What happened during the session?"></div> </div>
+                        <div class="session-note-box"> <div class="session-note-box-header"> <h3>NPC/Characters</h3> <button class="bullet-toggle btn">●</button> </div> <div id="session-npc-characters" class="editable-textarea" contenteditable="true" data-placeholder="New characters introduced..."></div> </div>
+                        <div class="session-note-box"> <div class="session-note-box-header"> <h3>World Building</h3> <button class="bullet-toggle btn">●</button> </div> <div id="session-world-building" class="editable-textarea" contenteditable="true" data-placeholder="Details about locations, lore, etc."></div> </div>
+                        <div class="session-note-box"> <div class="session-note-box-header"> <h3>Misc</h3> <button class="bullet-toggle btn">●</button> </div> <div id="session-misc" class="editable-textarea" contenteditable="true" data-placeholder="Any other random thoughts..."></div> </div>
+                    </div>
+                    <div class="archive-notes-container"> <button id="archive-notes-btn" class="btn">Archive Notes</button> </div>
+                </div>
+            </section>

@@ -1,0 +1,44 @@
+<section id="page-encounters" class="content-panel">
+                <div class="page-tabs">
+                    <button class="page-tab-btn active" data-tab="encounters-tab-content">Encounters</button>
+                    <button class="page-tab-btn" data-tab="creatures-tab-content">Creatures</button>
+                    <button class="page-tab-btn" data-tab="players-tab-content">Players</button>
+                </div>
+
+                <div id="encounters-tab-content" class="page-tab-content-item active">
+                    <div id="battles-container">
+                        </div>
+                </div>
+
+                <div id="creatures-tab-content" class="page-tab-content-item">
+                    <div class="library-layout">
+                        <div class="library-top-panel">
+                            <div class="library-controls">
+                                <input type="text" id="creature-search-input" placeholder="Search Monsters...">
+                                <button id="create-creature-btn" class="btn">Create Manual</button>
+                                <button class="btn">Save All</button>
+                            </div>
+                            <div id="creatures-search-list" class="creatures-list">
+                                </div>
+                        </div>
+                        <div class="library-saved-container">
+                            <h2 class="library-saved-title">My Creatures</h2>
+                            <div id="saved-creatures-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="players-tab-content" class="page-tab-content-item">
+                     <div class="library-layout">
+                        <div class="library-controls" style="align-self: flex-start;">
+                            <button id="new-player-btn" class="btn">New Player</button>
+                            <button id="random-player-btn" class="btn">Random</button>
+                        </div>
+                        <div class="library-saved-container">
+                            <h2 class="library-saved-title">Party</h2>
+                            <div id="saved-players-list">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
