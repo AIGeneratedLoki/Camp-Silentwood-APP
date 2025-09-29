@@ -16,11 +16,11 @@
         <header class="app-header">
             <nav class="main-nav">
                 <ul>
-                    <li> <a href="#" data-page="page-story" class="active" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/storyicon.png" alt="Story"></div> </a> </li>
-                    <li> <a href="#" data-page="page-encounters" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/encountersicon.png" alt="Encounters"></div> </a> </li>
-                    <li> <a> <div class="icon-circle"><img src="Assets/mapsicon.jpg" alt="Locations"></div> </a> </li>
-                    <li> <a href="#" data-page="page-notes" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/notesicon.png" alt="Notes"></div> </a> </li>
-                    <li> <a href="#" data-page="page-chat" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/chaticon.png" alt="Chat"></div> </a> </li>
+                    <li> <a href="#" data-page="page-story" id="nav-story" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/storyicon.png" alt="Story"></div> </a> </li>
+                    <li> <a href="#" data-page="page-encounters" id="nav-encounters" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/encountersicon.png" alt="Encounters"></div> </a> </li>
+                    <li> <a href="#" data-page="page-maps" id="nav-maps" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/mapsicon.jpg" alt="Locations"></div> </a> </li>
+                    <li> <a href="#" data-page="page-notes" id="nav-notes" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/notesicon.png" alt="Notes"></div> </a> </li>
+                    <li> <a href="#" data-page="page-chat" id="nav-chat" role="button" tabindex="0"> <div class="icon-circle"><img src="Assets/chaticon.png" alt="Chat"></div> </a> </li>
                 </ul>
             </nav>
         </header>
@@ -56,6 +56,7 @@
                     <div class="archive-notes-container"> <button id="archive-notes-btn" class="btn">Archive Notes</button> </div>
                 </div>
             </section>
+            
             <section id="page-encounters" class="content-panel">
                 <div class="page-tabs">
                     <button class="page-tab-btn active" data-tab="encounters-tab-content">Encounters</button>
@@ -100,11 +101,30 @@
                     </div>
                 </div>
             </section>
-             <section id="page-notes" class="content-panel">
-                 <div class="notes-layout"> 
+            
+            <section id="page-maps" class="content-panel">
+                <div id="token-controls">
+                    <div id="color-palette-new-token"></div>
+                </div>
+                <div class="main-container">
+                    <div class="map-wrapper">
+                        <div id="map-view"></div>
+                    </div>
+                    <div class="sidebar-wrapper">
+                        <div id="map-list-container"></div>
+                    </div>
+                </div>
+                <div id="token-context-menu" class="context-menu">
+                    <div id="color-palette"></div>
+                    <button id="delete-token-btn">Delete Token</button>
+                </div> 
+            </section>
+            
+            <section id="page-notes" class="content-panel">
+                <div class="notes-layout"> 
                     <div class="notes-sidebar">
                         <div class="notes-controls">
-                            <div>
+                            <div> 
                                 <button id="new-note-btn" class="btn">New Note</button>
                                 <button id="new-sub-note-btn" class="btn">New Sub-Note</button>
                             </div>
@@ -119,55 +139,75 @@
                     <div class="notes-main">
                         <textarea id="note-editor" disabled></textarea>
                     </div>
-                 </div>
+                </div> 
+            </section> 
+            
+            <section id="page-chat" class="content-panel">
+                <div class="chat-layout">
+                    <div class="chat-history-sidebar">
+                        <h3 class="chat-history-title">History</h3>
+                        <div id="chat-history-list">
+                        </div>
+                    </div>
+                    <div class="chat-main">
+                        <div id="chat-messages" class="chat-messages-container">
+                        </div>
+                        <div class="chat-input-area">
+                            <textarea id="chat-input" placeholder="Type your message..."></textarea>
+                            <button id="chat-send-btn" class="btn">Send</button>
+                        </div>
+                    </div>
+                </div>
             </section>
+            
         </main>
-    </div>
-
-    <div id="status-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <h2>Select Status Effects</h2>
-            <div id="status-options-list"></div>
-            <div class="modal-actions"> <button id="save-status-btn" class="btn">Save</button> <button id="close-status-btn" class="btn">Close</button> </div>
-        </div>
-    </div>
-    
-    <div id="feedback-modal" class="modal-overlay" style="display: none;">
-        <div class="feedback-content">
-            <p id="feedback-message"></p>
-        </div>
-    </div>
-
-    <div id="player-sheet-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="sheet-header">
-                <h2 id="player-sheet-name">Character Name</h2>
-                <label class="edit-toggle-label">
-                    <span>Edit</span>
-                    <input type="checkbox" id="player-sheet-edit-toggle">
-                    <span class="edit-toggle-switch"></span>
-                </label>
-                <button id="close-player-sheet-btn" class="btn" style="margin-left: 15px;">X</button>
+        
+        <div id="status-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h2>Select Status Effects</h2>
+                <div id="status-options-list"></div>
+                <div class="modal-actions"> <button id="save-status-btn" class="btn">Save</button> <button id="close-status-btn" class="btn">Close</button> </div>
             </div>
-            <div id="player-sheet-body" class="player-sheet-body">
-                </div>
         </div>
-    </div>
-
-    <div id="creature-sheet-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="sheet-header">
-                <h2 id="creature-sheet-name">Creature Name</h2>
-                <div>
-                    <button id="save-creature-sheet-btn" class="btn">Save</button>
-                    <button id="close-creature-sheet-btn" class="btn" style="margin-left: 15px;">X</button>
-                </div>
+        
+        <div id="feedback-modal" class="modal-overlay" style="display: none;">
+            <div class="feedback-content">
+                <p id="feedback-message"></p>
             </div>
-            <div id="creature-sheet-body" class="creature-sheet-body">
+        </div>
+
+        <div id="player-sheet-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="sheet-header">
+                    <h2 id="player-sheet-name">Character Name</h2>
+                    <label class="edit-toggle-label">
+                        <span>Edit</span>
+                        <input type="checkbox" id="player-sheet-edit-toggle">
+                        <span class="edit-toggle-switch"></span>
+                    </label>
+                    <button id="close-player-sheet-btn" class="btn" style="margin-left: 15px;">X</button>
                 </div>
+                <div id="player-sheet-body" class="player-sheet-body">
+                    </div>
+            </div>
+        </div>
+
+        <div id="creature-sheet-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="sheet-header">
+                    <h2 id="creature-sheet-name">Creature Name</h2>
+                    <div>
+                        <button id="save-creature-sheet-btn" class="btn">Save</button>
+                        <button id="close-creature-sheet-btn" class="btn" style="margin-left: 15px;">X</button>
+                    </div>
+                </div>
+                <div id="creature-sheet-body" class="creature-sheet-body">
+                    </div>
+            </div>
         </div>
     </div>
-
+    <script src="config.js"></script>
     <script src="app.js"></script>
+    <script src="maps.js"></script>
 </body>
 </html>
